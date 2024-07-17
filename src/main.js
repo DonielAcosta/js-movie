@@ -1,1 +1,2 @@
-console.log('matando la liga')
+
+console.log('API URL = https://luhiulhiusf.com/ahiuhiudaiu?api_jey=' + API_KEY)
