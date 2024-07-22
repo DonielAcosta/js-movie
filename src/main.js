@@ -1,46 +1,64 @@
 
 //console.log('API URL = https://luhiulhiusf.com/ahiuhiudaiu?api_jey=' + API_KEY)
 
-const api =axios.create({
-    baseURL:'https://api.themoviedb.org/3/',
-    headers:{
-        'Content-Type':'aplication/json;charset=utf-8',
+const api = axios.create({
+    baseURL: 'https://api.themoviedb.org/3/',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
     },
-    params:{
-        'api_key': API_KEY,
+    params: {
+      'api_key': API_KEY,
     },
-});
+  });
+// async function getTrendingMoviesPreview(){
+//     const { data } = await api('trending/movie/day');
+//     // const data = await response.json()
+//     const peli = data.movies;
+//     // console.log({peli,data});
+//     peli.forEach(movie => {
 
-async function getTrendingMoviesPreview(){
-    const {data} = await api('trending/movie/day');
+//         const trendingPreviewMoviesContainer =  document.querySelector('#trendingPreview .trendingPreview-movieList')
+//         const movieContainer =document.createElement('div');
+//         movieContainer.classList.add('movie-container');
 
-    // const data = await response.json()
-    const peli = data.movies;
-    // console.log({peli,data});
-    peli.forEach(movie => {
-
-        const trendingPreviewMoviesContainer =  document.querySelector('#trendingPreview .trendingPreview-movieList')
-        const movieContainer =document.createElement('div');
-        movieContainer.classList.add('movie-container');
-
-        const  movieImg = document.createElement('img');
-        movieImg.classList.add('movie-img');
-        movieImg.setAttribute('alt',movie.title);
-        movieImg.setAttribute('src','https://image.tmdb.org/t/p/w300' + movie.poster_path,);
+//         const  movieImg = document.createElement('img');
+//         movieImg.classList.add('movie-img');
+//         movieImg.setAttribute('alt',movie.title);
+//         movieImg.setAttribute('src','https://image.tmdb.org/t/p/w300' + movie.poster_path,);
         
-        movieContainer.appendChild(movieImg);
-        trendingPreviewMoviesContainer.appendChild(movieContainer);
+//         movieContainer.appendChild(movieImg);
+//         trendingPreviewMoviesContainer.appendChild(movieContainer);
 
+//     });
+
+// }
+async function getTrendingMoviesPreview() {
+    const { data } = await api('trending/movie/day');
+    const movies = data.results;
+  
+    movies.forEach(movie => {
+      const trendingPreviewMoviesContainer = document.querySelector('#trendingPreview .trendingPreview-movieList')
+      
+      const movieContainer = document.createElement('div');
+      movieContainer.classList.add('movie-container');
+  
+      const movieImg = document.createElement('img');
+      movieImg.classList.add('movie-img');
+      movieImg.setAttribute('alt', movie.title);
+      movieImg.setAttribute(
+        'src',
+        'https://image.tmdb.org/t/p/w300' + movie.poster_path,
+      );
+  
+      movieContainer.appendChild(movieImg);
+      trendingPreviewMoviesContainer.appendChild(movieContainer);
     });
-
 }
 
-
 async function getCategoriesPreview(){
-    const {data} = await api('genre/movie/list');
-
-    // const data = await response.json()
+    const { data } = await api('genre/movie/list');
     const categories = data.genres;
+
     // console.log({peli,data});
     categories.forEach(category => {
 
