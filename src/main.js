@@ -7,8 +7,20 @@ const api = axios.create({
     'api_key': API_KEY,
   },
 });
+
+const lazyLoader = new IntersectionObserver((entris)=>{
+  entris.forEach(entry => {
+    entry
+    console.log({entry});
+    if(entry.isIntersecting){
+
+      const url = entry.target.getAttribute('data-img')
+      entry.target.setAttribute('src', url)
+    }
+  });
+});
 //crea las pelicas 
-function createMovies(movies,container){
+function createMovies(movies,container, lazyloader= false){
   container.innerHTML =''
 
   movies.forEach(movie => {
@@ -22,10 +34,13 @@ function createMovies(movies,container){
     movieImg.classList.add('movie-img');
     movieImg.setAttribute('alt', movie.title);
     movieImg.setAttribute(
-     'src',
+      lazyloader ? 'data-img': 'src',
       'https://image.tmdb.org/t/p/w300' + movie.poster_path,
     );
 
+    if(lazyloader){
+      lazyLoader.observe(movieImg);
+    }
     const movieTitle = document.createElement('h3');
     movieTitle.classList.add('movie-title');
     movieTitle.textContent = movie.title;
@@ -68,7 +83,7 @@ async function getTrendingMoviesPreview(){
   const { data } = await api('trending/movie/day');
   const movies = data.results;
 
-  createMovies(movies,trendingMoviesPreviewList);
+  createMovies(movies,trendingMoviesPreviewList,true);
 }
 
 async function getCategegoriesPreview() {
