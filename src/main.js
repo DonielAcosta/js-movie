@@ -7,7 +7,7 @@ const api = axios.create({
     'api_key': API_KEY,
   },
 });
-
+//crea las pelicas 
 function createMovies(movies,container){
   container.innerHTML =''
 
@@ -41,10 +41,8 @@ function createMovies(movies,container){
     container.appendChild(movieContainer);
   })
 }
-
-function createCategories(categories,container) {
-
-
+//crea las categorias
+function createCategories(categories,container){
   container.innerHTML = "";
 
   categories.forEach(category => {  
@@ -66,7 +64,7 @@ function createCategories(categories,container) {
 }
 //llamar  a la API 
 
-async function getTrendingMoviesPreview() {
+async function getTrendingMoviesPreview(){
   const { data } = await api('trending/movie/day');
   const movies = data.results;
 
@@ -80,7 +78,6 @@ async function getCategegoriesPreview() {
 
   createCategories(categories,categoriesPreviewList);
 }
-
 
 async function getMoviesByCategory(id) {
   const { data } = await api('discover/movie', {
