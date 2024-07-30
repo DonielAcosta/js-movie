@@ -37,6 +37,12 @@ function createMovies(movies,container, lazyloader= false){
       lazyloader ? 'data-img': 'src',
       'https://image.tmdb.org/t/p/w300' + movie.poster_path,
     );
+    movieImg.addEventListener('error',()=>{
+      movieImg.setAttribute(
+        'src',
+        'https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg',
+      )
+    })
 
     if(lazyloader){
       lazyLoader.observe(movieImg);
@@ -102,7 +108,7 @@ async function getMoviesByCategory(id) {
   });
   const movies = data.results;
 
-  createMovies(movies,genericSection)
+  createMovies(movies,genericSection,true)
 
 }
 
