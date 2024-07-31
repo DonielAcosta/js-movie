@@ -1,4 +1,5 @@
 let page = 1;
+let maxPage;
 let infiniteScroll;
 searchFormBtn.addEventListener('click', () => {
   location.hash = '#search=' + searchFormInput.value;
