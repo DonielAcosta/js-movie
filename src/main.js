@@ -8,20 +8,22 @@ const api = axios.create({
   },
 });
 
-const lazyLoader = new IntersectionObserver((entris)=>{
-  entris.forEach(entry => {
+const lazyLoader = new IntersectionObserver((entries)=>{
+  entries.forEach(entry => {
     entry
-    console.log({entry});
+    // console.log({entry});
     if(entry.isIntersecting){
 
       const url = entry.target.getAttribute('data-img')
-      entry.target.setAttribute('src', url)
+      entry.target.setAttribute('src', url);
     }
   });
 });
 //crea las pelicas 
-function createMovies(movies,container, lazyloader= false){
-  container.innerHTML =''
+function createMovies(movies,container, {lazyLoad= false,clear=true}={},){
+  if(clear){
+    container.innerHTML =''
+  }
 
   movies.forEach(movie => {
     const movieContainer = document.createElement('div');
@@ -34,7 +36,7 @@ function createMovies(movies,container, lazyloader= false){
     movieImg.classList.add('movie-img');
     movieImg.setAttribute('alt', movie.title);
     movieImg.setAttribute(
-      lazyloader ? 'data-img': 'src',
+      lazyLoad ? 'data-img': 'src',
       'https://image.tmdb.org/t/p/w300' + movie.poster_path,
     );
     movieImg.addEventListener('error',()=>{
@@ -44,7 +46,7 @@ function createMovies(movies,container, lazyloader= false){
       )
     })
 
-    if(lazyloader){
+    if(lazyLoad){
       lazyLoader.observe(movieImg);
     }
     const movieTitle = document.createElement('h3');
@@ -111,7 +113,6 @@ async function getMoviesByCategory(id) {
   createMovies(movies,genericSection,true)
 
 }
-
 async function getMoviesBySearch(query) {
   const { data } = await api('search/movie', {
     params: {
@@ -127,17 +128,48 @@ async function getTrendingMovies() {
   const { data } = await api('trending/movie/day');
   const movies = data.results;
 
-  createMovies(movies,genericSection);
+  createMovies(movies,genericSection,{lazyLoader: true,clear: true});
+
+  // const btnLoadMore = document.createElement('button');
+  // btnLoadMore.innerText ='Cargar Mas';
+  // btnLoadMore.addEventListener('click',getPaginatedTrendingMovies);
+  // genericSection.appendChild(btnLoadMore);
+}
+// let page = 1;
+// window.addEventListener('scroll',getPaginatedTrendingMovies);
+
+async function getPaginatedTrendingMovies() {
+  const {scrollTop,scrollHeight,clientHeight}= document.documentElement;
+
+  const scrollIsBottom = (scrollTop + clientHeight) >= scrollHeight -15;
+
+  if(scrollIsBottom){
+    page++;
+    const { data } = await api('trending/movie/day', {
+      params: {
+        page,
+      },
+    });
+    const movies = data.results;
+  
+    createMovies(movies,genericSection,{ lazyLoad: true, clean: false },);
+  
+  }
+
+  // const btnLoadMore = document.createElement('button');
+  // btnLoadMore.innerText = 'Cargar más';
+  // btnLoadMore.addEventListener('click', getPaginatedTrendingMovies);
+  // genericSection.appendChild(btnLoadMore);
 }
 //detalles de peliculas
-async function getMoviesById(id) {
+async function getMovieById(id) {
   const { data: movie } = await api('movie/' + id);
 
   const movieImgUrl = 'http://image.tmdb.org/t/p/w500' + movie.poster_path;
   console.log(movieImgUrl);
   headerSection.style.background  =` linear-gradient(
                                       180deg,rgba(0,0,0,0.35)19.27%,
-                                      rgba(0,0,0,0.05)29.27%
+                                      rgba(0,0,0,0)29.17%
                     ),url(${movieImgUrl})`;
 
   movieDetailTitle.textContent        = movie.title;

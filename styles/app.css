@@ -413,3 +413,142 @@ footer {
     opacity: 0%;
   }
 }
+/*para que funcione responsive */
+/* Media Queries */
+@media screen and (max-width: 1200px) {
+  .header-container--long {
+    height: 360px;
+  }
+
+  .movie-container--loading,
+  .trendingPreview-movieList .movie-container .movie-img {
+    height: 180px;
+    width: 120px;
+  }
+
+  .header-searchForm input,
+  .header-searchForm button {
+    height: 40px;
+  }
+
+  .movieDetail-container {
+    margin-top: 303px;
+  }
+
+  .relatedMovies-container {
+    height: 180px;
+  }
+
+  .relatedMovies-scrollContainer .movie-img {
+    width: 100px;
+    height: 150px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header-container {
+    padding-top: 20px;
+  }
+
+  .header-container--long {
+    height: 240px;
+  }
+
+  .header-searchForm {
+    flex-direction: column;
+  }
+
+  .header-searchForm input {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .header-searchForm button {
+    border-radius: 0 0 8px 8px;
+  }
+
+  .trendingPreview-movieList {
+    padding-left: 12px;
+    padding-bottom: 8px;
+  }
+
+  .trendingPreview-movieList .movie-container {
+    margin-right: 4px;
+  }
+
+  .movie-container--loading,
+  .trendingPreview-movieList .movie-container .movie-img {
+    height: 150px;
+    width: 100px;
+  }
+
+  .category-container {
+    width: 100%;
+  }
+
+  .genericList-container .movie-container {
+    width: 100%;
+  }
+
+  .movieDetail-container {
+    margin-top: 203px;
+  }
+
+  .relatedMovies-container {
+    height: 150px;
+  }
+
+  .relatedMovies-scrollContainer .movie-img {
+    width: 80px;
+    height: 120px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header-container {
+    padding-top: 10px;
+  }
+
+  .header-container--long {
+    height: 180px;
+  }
+
+  .header-title {
+    font-size: 18px;
+  }
+
+  .header-arrow {
+    font-size: 24px;
+  }
+
+  .trendingPreview-header,
+  .categoriesPreview-container,
+  .trendingPreview-container,
+  footer {
+    padding: 0 12px;
+  }
+
+  .trendingPreview-movieList {
+    padding-left: 6px;
+    padding-bottom: 4px;
+  }
+
+  .movie-container--loading,
+  .trendingPreview-movieList .movie-container .movie-img {
+    height: 120px;
+    width: 80px;
+  }
+
+  .movieDetail-container {
+    padding: 16px 12px;
+    margin-top: 153px;
+  }
+
+  .relatedMovies-container {
+    height: 120px;
+  }
+
+  .relatedMovies-scrollContainer .movie-img {
+    width: 60px;
+    height: 90px;
+  }
+}
