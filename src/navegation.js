@@ -16,14 +16,13 @@ arrowBtn.addEventListener('click', () => {
 
 window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
-window.addEventListener('scroll',infiniteScroll,{passive:false});
-
+window.addEventListener('scroll', infiniteScroll, false);
 
 function navigator() {
   console.log({ location });
 
-  if(infiniteScroll){
-    window.addEventListener('scroll', infiniteScroll, {passive:false});
+  if (infiniteScroll) {
+    window.removeEventListener('scroll', infiniteScroll, { passive: false });
     infiniteScroll = undefined;
   }
   
@@ -68,7 +67,7 @@ function homePage() {
   getCategegoriesPreview();
 }
 
-function categoriesPage() {
+function categoriesPage(){
   console.log('categories!!');
 
   headerSection.classList.remove('header-container--long');
@@ -91,6 +90,8 @@ function categoriesPage() {
   headerCategoryTitle.innerHTML = categoryName;
   
   getMoviesByCategory(categoryId);
+  infiniteScroll = getPaginatedMoviesByCategory(categoryId);
+
 }
 
 function movieDetailsPage() {
@@ -134,6 +135,9 @@ function searchPage() {
   // ['#search', 'platzi']
   const [_, query] = location.hash.split('=');
   getMoviesBySearch(query);
+
+  infiniteScroll = getPaginatedMoviesBySearch(query);
+
 }
 
 function trendsPage() {
