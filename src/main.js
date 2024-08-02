@@ -8,11 +8,25 @@ const api = axios.create({
   },
 });
 function likedMovieList(){
-  
+
+  const item = JSON.parse(localStorage.getItem('liked_movies'));
+  let movies;
+
+  movies = item ? item: {};
+   //console.log(movies);
+  return movies;
+
 }
 
 function likeMovie(movie){
+  const likedMovies = likedMovieList();
+  if(likedMovies[movie.id]){
+    likedMovies[movie.id] = undefined;
+  }else{ 
+    likedMovies[movie.id] = movie;
 
+  }
+  localStorage.setItem('liked_movies',JSON.stringify(likedMovies));
 }
 const lazyLoader = new IntersectionObserver((entries)=>{
   entries.forEach(entry => {
