@@ -68,6 +68,7 @@ function createMovies(movies,container,{lazyLoad = false,clean = true,} = {},){
 
     const movieBtn = document.createElement('button');
     movieBtn.classList.add('movie-btn');
+    likedMovieList()[movie.id] && movieBtn.classList.add('movie-btn--liked')
     movieBtn.addEventListener('click', () => {
       movieBtn.classList.toggle('movie-btn--liked');
       likeMovie(movie);
@@ -208,7 +209,6 @@ async function getPaginatedTrendingMovies() {
   // genericSection.appendChild(btnLoadMore);
 }
 
-
 function getPaginatedMoviesBySearch(query) {
   return async function () {
     const {scrollTop,scrollHeight,clientHeight} = document.documentElement;
@@ -255,4 +255,11 @@ async function getRelatedMoviesId(id){
   const relatedMovies = data.results;
 
   createMovies(relatedMovies,relatedMoviesContainer);
+}
+
+function getLikedMovies(){
+  const  likedMovies = likedMovieList();
+   const  MovieArray = Object.values(likedMovies);
+   createMovies(MovieArray,likedMoviesListArticle,{lazyLoad:true,clean:true});
+  console.log(MovieArray)
 }
